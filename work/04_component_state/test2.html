@@ -20,21 +20,14 @@
   */
   class LikeMe extends React.Component {
 
-    constructor (props) {
-      super(props) // 调用父类型的构造器
-      // 初始化状态
-      this.state = { // 包含n个状态数据的容器对象
-        isLikeMe: false
-      }
-
-      // 强制绑定自定义方法的this为组件对象
-      this.handleClick = this.handleClick.bind(this) // 内部: handleClick.call(this)
+    // 给组件对象指定state属性值
+    state = { // 包含n个状态数据的容器对象
+      isLikeMe: false
     }
 
     // 自定义的方法中的this是undefined
-    handleClick () {
-      // alert('----')
-      console.log('handleClick()', this) // undeined
+    handleClick = () => { // 箭头函数没有自己的this, 使用外部this, 外部this是组件对象
+      console.log('handleClick()', this)
       const isLikeMe = !this.state.isLikeMe
       // this.state.isLikeMe = !this.state.isLikeMe  // 直接修改状态数据, 不会更新界面
       // 必须调用组件对象的setState()才能更新状态并更新界面
