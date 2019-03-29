@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>03_component_basic</title>
+</head>
+<body>
+
+  <div id="example1"></div>
+  <div id="example2"></div>
+
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    // 1. 定义组件
+    /*方式1: 工厂函数组件(无状态/简单组件)*/
+    /*工厂函数: 每次调用都会返回一个新的对象*/
+    function MyComponent() { // 标签名就是组件名
+      console.log('MyComponent()', this)
+      return <h2>工厂函数组件(无状态/简单组件)</h2>  // React.createElement()返回的虚拟DOM元素对象
+    }
+
+    /*方式2:  ES6类组件(有状态/复杂组件)*/
+    class MyComponent2 extends React.Component{
+      // 重写父类的方法
+      render () { // 由组件类的实例(组件对象)来调用
+        console.log('MyComponent2 render()', this)
+        return (
+          <div>
+            <h2>ES6类组件(有状态/复杂组件)</h2>
+            <h2>ES6类组件(有状态/复杂组件)</h2>
+            <input type="text"/>
+          </div>
+        )
+      }
+    }
+
+    // new MyComponent2()
+
+    // 2. 渲染组件标签
+    ReactDOM.render(<MyComponent/>, document.getElementById('example1'))  // 内部调用组件函数
+    ReactDOM.render(<MyComponent2/>, document.getElementById('example2'))// 内部 创建类的实例, 再调用render()得到虚拟DOM
+  </script>
+</body>
+</html>

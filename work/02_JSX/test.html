@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>02_JSX</title>
+</head>
+<body>
+  <div id="test1"></div>
+  <div id="test2"></div>
+
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+<script type="text/javascript">
+  /*1. 使用纯js语法创建虚拟DOM*/
+
+  // 1. 创建虚拟DOM元素对象
+  const vDOM = React.createElement('h2', {id: 'atguigu'}, 'I Like You')
+  const dom = document.getElementById('test1')
+
+  // 2. 渲染虚拟DOM
+  ReactDOM.render(vDOM, dom)
+</script>
+
+<script type="text/babel">
+  const myId = 'bj'
+  const content = 'I Like You too'
+  /*2. 使用jsx语法创建虚拟DOM*/
+  // 1. 创建虚拟DOM元素对象
+  const vDOM2 = <h3 id={myId}>{content}</h3>
+  const dom2 = document.getElementById('test2')
+  debugger
+  // 2. 渲染虚拟DOM
+  ReactDOM.render(vDOM2, dom2)
+
+  /*
+  虚拟DOM: 较轻的普通对象(少量的几个属性), 只是更新虚拟DOM界面不会立即更新
+  真实DOM: 较重的对象(很多属性), 更新它界面会立即更新
+   */
+</script>
+</body>
+</html>
