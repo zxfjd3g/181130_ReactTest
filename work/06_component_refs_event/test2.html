@@ -21,10 +21,14 @@
    */
     class MyComponent extends React.Component {
 
+      // 1. 创建一个ref容器对象, 并保存到组件对象
+      myRef = React.createRef()
+      myRef2 = React.createRef()
 
       hint = () => {
         console.log(this)
-        const input = this.refs.content
+        /*3. 通过ref对象的current属性得到标签对象*/
+        const input = this.myRef.current
         alert(input.value)
       }
 
@@ -35,9 +39,10 @@
       render () {
         return (
           <div>
-            <input type="text" ref="content"/> &nbsp;
+            {/*2. 将ref容器对象交给input, 内部会将input元素对象保存ref容器对象的current属性上*/}
+            <input type="text" ref={this.myRef}/> &nbsp;
             <button onClick={this.hint}>提示</button>&nbsp;
-            <input type="text" onBlur={this.hint2}/>
+            <input type="text" onBlur={this.hint2} ref={this.myRef2}/>
           </div>
         )
       }
