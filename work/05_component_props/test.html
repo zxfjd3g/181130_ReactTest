@@ -8,8 +8,16 @@
 
 <div id="example1"></div>
 
-<script type="text/javascript" src="../js/react.development.js"></script>
-<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<hr>
+
+<div id="example2"></div>
+
+
+
+
+<script type="text/javascript" src="../js/react.development.js"></script> <!--React-->
+<script type="text/javascript" src="../js/react-dom.development.js"></script><!--ReactDOM-->
+<script type="text/javascript" src="../js/prop-types.js"></script> <!--PropTypes-->
 <script type="text/javascript" src="../js/babel.min.js"></script>
 
 <script type="text/babel">
@@ -18,8 +26,82 @@
 需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
   1). 如果性别没有指定, 默认为男
   2). 如果年龄没有指定, 默认为18
+  3). 姓名必须指定
   */
 
+  class Person extends React.Component {
+
+    // 限制属性值的类型和属性的必要性
+    static propTypes = { // 给组件类对象(将组件类作为对象使用)添加属性, 也就是Person
+      name: PropTypes.string.isRequired,
+      age: PropTypes.number,
+      sex: PropTypes.string,
+    }
+
+    // 默认属性值
+    static defaultProps = {
+      age: 18,
+      sex: '男'
+    }
+
+    // 给组件对象(组件类的实例对象)指定属性
+    state = {
+
+    }
+    render() {
+      // 读取标签属性
+      const {name, age, sex} = this.props
+      return (
+        <ul>
+          <li>姓名: {name}</li>
+          <li>性别: {age}</li>
+          <li>年龄: {sex}</li>
+        </ul>
+      )
+    }
+  }
+
+  // 限制属性值的类型和属性的必要性
+  /*Person.propTypes = {
+    name: PropTypes.string.isRequired,
+    age: PropTypes.number,
+    sex: PropTypes.string,
+  }*/
+
+  // 默认属性值
+  /*Person.defaultProps = {
+    age: 18,
+    sex: '男'
+  }*/
+
+  const p = {
+    name: 'Tom',
+    age: 18,
+    sex: '男'
+  }
+  
+  ReactDOM.render(<Person name={p.name} age={p.age} sex={p.sex}/>, document.getElementById('example1'))
+
+  const p2 = {
+    name: 'Jack',
+    age: '18',
+    sex: '男'
+  }
+  // ReactDOM.render(<Person age={p2.age} sex={p2.sex}/>, document.getElementById('example2'))
+  // ReactDOM.render(<Person name="jack"/>, document.getElementById('example2'))
+  ReactDOM.render(<Person {...p2}/>, document.getElementById('example2'))
+
+  /*
+  ...扩展运算符
+  1. 打包(容器: 数组/对象)
+    function fn (...args) {}
+    fn(1, 3, 5) // args= [1, 3, 5]
+  2. 解/拆包
+    const arr1 = [1, 3]
+    const arr2 = [4, ...arr1]
+
+    <Person {...p}/>  ===> <Person name={p.name} age={p.age} sex={p.sex}/>
+  */
 </script>
 </body>
 </html>
