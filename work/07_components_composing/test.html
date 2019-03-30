@@ -35,7 +35,7 @@
         return (
           <div>
             <h2>TODO LIST</h2>
-            <Add addTodo={this.addTodo}/>
+            <Add addTodo={this.addTodo} count={todos.length}/>
             <List todos={todos}/>
           </div>
         )
@@ -45,7 +45,8 @@
     class Add extends React.Component {
 
       static propTypes = {
-        addTodo: PropTypes.func.isRequired
+        addTodo: PropTypes.func.isRequired,
+        count: PropTypes.number.isRequired
       }
 
       addTodo = () => {
@@ -60,16 +61,17 @@
       }
 
       render () {
+        const {count} = this.props
         return (
           <div>
             <input type="text" ref="todo"/>
-            <button onClick={this.addTodo}>Add #1</button>
+            <button onClick={this.addTodo}>Add #{count}</button>
           </div>
         )
       }
     }
 
-    class List extends React.Component {
+    /*class List extends React.Component {
 
       static propTypes = {
         todos: PropTypes.array.isRequired
@@ -85,6 +87,19 @@
           </ul>
         )
       }
+    }*/
+
+    function List({todos}) {
+      return (
+        <ul>
+          {
+            todos.map((todo, index) => <li key={index}>{todo}</li>)
+          }
+        </ul>
+      )
+    }
+    List.propTypes = {
+      todos: PropTypes.array.isRequired
     }
     
     ReactDOM.render(<App/>, document.getElementById('example'))

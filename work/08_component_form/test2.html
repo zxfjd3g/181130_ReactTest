@@ -20,20 +20,38 @@
   
   class Form extends React.Component {
 
+    state = {
+      name: 'tom',
+      pwd: ''
+    }
+
+    // 输入改变时, 将最新的值更新到状态数据中
+    handleNameChange = (event) => {
+      const name = event.target.value
+      this.setState({
+        name
+      })
+    }
+    handlePwdChange = (event) => {
+      const pwd = event.target.value
+      this.setState({
+        pwd
+      })
+    }
+
     login = (event) => {
       // 阻止事件的默认行为
       event.preventDefault()
-      // 读取输入的数据
-      const name = this.refs.name.value
-      const pwd = this.refs.pwd.value
-
+      // 读取状态中的数据
+      const {name, pwd} = this.state
       console.log(`发送ajax请求, name=${name}, pwd=${pwd}`)
     }
     render() {
+      const {name} = this.state
       return (
         <form action="/xxx" onSubmit={this.login}>
-          用户名: <input type="text" ref="name"/>&nbsp;
-          密码: <input type="password" ref="pwd"/>&nbsp;
+          用户名: <input type="text" value={name} onChange={this.handleNameChange}/>&nbsp;
+          密码: <input type="password" onChange={this.handlePwdChange}/>&nbsp;
           <button>登陆</button>
         </form>
       )
@@ -41,6 +59,11 @@
   }
   
   ReactDOM.render(<Form/>, document.getElementById('example'))
+
+  /*
+  原生的change监听: 失去焦点才触发(输入过程中不触发)
+  react的change监听: 输入过程中触发
+   */
 </script>
 </body>
 </html>

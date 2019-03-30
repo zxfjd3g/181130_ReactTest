@@ -14,9 +14,57 @@
   /*
   需求: 自定义组件
     1. 让指定的文本做显示/隐藏的动画
-    2. 切换时间为2S
+    2. 切换时间为2S: 每隔200ms变化0.1
     3. 点击按钮从界面中移除组件界面
    */
+
+  class Life extends React.Component {
+
+    state = {
+      opacity: 1
+    }
+
+    // 在初始显示(render())之后调用
+    componentDidMount () {
+      // 什么时候启动定时器?
+     this.intervalId = setInterval( () => {// 必须箭头函数
+        console.log('------')
+        let {opacity} = this.state
+        opacity -= 0.1
+        if(opacity<=0) {
+          opacity = 1
+        }
+        this.setState({
+          opacity
+        })
+      }, 200)
+    }
+
+    // 在组件将要卸载前调用
+    componentWillUnmount () {
+      // 清除定时器
+      clearInterval(this.intervalId)
+    }
+
+    unmountComponent = () => {
+      // 卸载组件
+      ReactDOM.unmountComponentAtNode(document.getElementById('example'))
+    }
+
+    render () {
+      const {opacity} = this.state
+      return (
+        <div>
+          <h2 style={{opacity}}>React太难, 学不会, 怎么办</h2>
+          <button onClick={this.unmountComponent}>不活了</button>
+        </div>
+      )
+    }
+  }
+
+
+
+  ReactDOM.render(<Life/>, document.getElementById('example'))
 </script>
 </body>
 </html>
