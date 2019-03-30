@@ -61,6 +61,22 @@
     }
   }
 
+  function Person2({name, age, sex}) {
+    return (
+      <ul>
+        <li>姓名: {name}</li>
+        <li>性别: {age}</li>
+        <li>年龄: {sex}</li>
+      </ul>
+    )
+  }
+  Person2.propTypes = {
+
+  }
+  Person2.defaultProps = {
+
+  }
+
   // 限制属性值的类型和属性的必要性
   /*Person.propTypes = {
     name: PropTypes.string.isRequired,

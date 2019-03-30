@@ -22,8 +22,8 @@
       }
 
       addTodo = (todo) => {
-        const todos = this.state.todos
-        todos.unshift(todo)
+        const todos = [...this.state.todos]
+        todos.unshift(todo) // 并没有更新state中的todos
         // 更新状态
         this.setState({todos})
       }
