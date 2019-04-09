@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>04_component_state</title>
+</head>
+<body>
+
+<div id="example"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+
+  /*
+  1. setState()的语法
+    setState({}, [callback])
+    setState((state, props) => ({}), [callback])
+  2. setState()的特点
+    它是异步的, 并不会立即更新状态
+    在相同的周期中多次调用会被合并到一起处理
+    callback在状态更新且界面更新之后执行
+   */
+  class StateTest extends React.Component {
+
+    state = {
+      count: 0,
+      name: 'tom'
+    }
+
+    update1 = () => {
+      console.log('setState()之前', this.state.count)
+      this.setState({
+        count: this.state.count + 1
+      }, () => { // 在状态更新且界面更新后执行
+        console.log('setState的回调', this.state.count, this.refs.count.innerHTML)
+      })
+      console.log('setState()之前', this.state.count)
+    }
+
+    update2 = () => {
+      console.log('setState()之前', this.state.count)
+      this.setState((state, props) => ({count: state.count + 1}), () => {
+        console.log('setState的回调', this.state.count, this.refs.count.innerHTML)
+      })
+      console.log('setState()之前', this.state.count)
+    }
+
+    update3 = () => {
+      /*this.setState({
+        count: 2
+      })
+      this.setState({
+        count: 3
+      })*/
+      this.setState({
+        count: this.state.count + 1
+      })
+      this.setState({
+        count: this.state.count + 1
+      })
+    }
+
+    render() {
+      const {count, name} = this.state
+      console.log('render()', count)
+      return (
+        <div>
+          <p ref='count'>{count}</p>
+          <p>{name}</p>
+          <button onClick={this.update1}>更新1</button>
+          <button onClick={this.update2}>更新2</button>
+          <button onClick={this.update3}>更新3</button>
+        </div>
+      )
+    }
+  }
+
+  ReactDOM.render(<StateTest/>, document.getElementById('example')) // 渲染组件标签, 内部会调用组件标签对象的render()虚拟DOM
+
+</script>
+</body>
+</html>
+
